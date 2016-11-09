@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import py.edu.facitec.springtaller.model.Pedido;
 
 @Repository
-public class PedidoDAO extends DAOGenerico<Pedido> {
+public class PedidoDao extends DAOGenerico<Pedido> {
 	@PersistenceContext
 	private EntityManager em;
 
-	public PedidoDAO() {
+	public PedidoDao() {
 		super(Pedido.class);
 		// TODO Auto-generated constructor stub
 	}

@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import py.edu.facitec.springtaller.dao.PedidoDAO;
+import py.edu.facitec.springtaller.dao.PedidoDao;
 import py.edu.facitec.springtaller.model.Pedido;
 
 @RestController
@@ -22,7 +23,7 @@ import py.edu.facitec.springtaller.model.Pedido;
 @RequestMapping("/pedido")
 public class PedidoController {
 	@Autowired
-	private PedidoDAO pedidoDao;
+	private PedidoDao pedidoDao;
 	
 	@RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Pedido> registrar(@RequestBody Pedido pedido){
@@ -50,6 +51,11 @@ public class PedidoController {
 		}
 		pedidoDao.eliminar(pedidoAEliminar);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/form", method=RequestMethod.GET)
+	public ModelAndView formulario(){
+		return new ModelAndView("/pedido/Form");
 	}
 
 }

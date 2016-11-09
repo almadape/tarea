@@ -21,51 +21,60 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import py.edu.facitec.springtaller.controller.HomeController;
 import py.edu.facitec.springtaller.dao.ClienteDAO;
 import py.edu.facitec.springtaller.model.Producto;
-import py.edu.facitec.springtaller.resolver.CustomXMLViewResolver;
-import py.edu.facitec.springtaller.resolver.JsonViewResolver;
+import py.edu.facitec.springtaller.viewresolver.CustomXMLViewResolver;
+import py.edu.facitec.springtaller.viewresolver.JsonViewResolver;
 
-@EnableWebMvc 
-@ComponentScan(basePackageClasses={HomeController.class, ClienteDAO.class}) 
-public class AppWebConfiguration extends WebMvcConfigurerAdapter { 
+//activa los compontes MVC de spring para trabajar el servlet 
+@EnableWebMvc
+//carga las clase necesarias para iniciar las aplicaciones
+@ComponentScan(basePackageClasses={HomeController.class, ClienteDAO.class})
+public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 
-	@Bean 
-	public InternalResourceViewResolver internalResourceViewResolver() { 
-		InternalResourceViewResolver resolver =new InternalResourceViewResolver(); 
-		resolver.setPrefix("/WEB-INF/views/"); resolver.setSuffix(".jsp"); 
-		return resolver; }
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
-
-	//Configuracion para convertir fecha a un formato especifico
+	//Gestiona como un nuevo componente de la aplicacion
 	@Bean
-	public FormattingConversionService mvcConversionService(){
-		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(true);
-		DateFormatterRegistrar registrar = new DateFormatterRegistrar();
-		registrar.setFormatter(new DateFormatter("yyyy-MM-dd"));
-		registrar.registerFormatters(conversionService);
-		return conversionService;
-	}
-	@Bean
-	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
-		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
-		resolvers.add(internalResourceViewResolver());
-		resolvers.add(new JsonViewResolver());
-		resolvers.add(getMarshallingXmlViewResolver());
-		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
-		resolver.setViewResolvers(resolvers);
-		resolver.setContentNegotiationManager(manager);
+	public InternalResourceViewResolver internalResourceViewResolver(){
+		InternalResourceViewResolver resolver= new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-	@Bean
-	public CustomXMLViewResolver
-	getMarshallingXmlViewResolver() {
-		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setClassesToBeBound(Producto.class);
-		return new CustomXMLViewResolver(marshaller);
-	}
+	
+	//configuracion necesarias para habilitar peticiones de recusros estaticos: css javascript y etc
+	@Override 
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();  
+		} 
+ 	
+	//configuracion para convertir fecha a un formato especifico
+ 	@Bean  	
+ 	public FormattingConversionService mvcConversionService() { 
+ 	 	DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(true);  	
+ 	 	DateFormatterRegistrar registrar = new DateFormatterRegistrar();  	
+ 	 	registrar.setFormatter(new DateFormatter("yyyy-MM-dd"));  	
+ 	 	registrar.registerFormatters(conversionService); 
+ 	 	return conversionService; 
+ 	 } 
+ 	@Bean  public ViewResolver contentNegotiatingViewResolver( 
+ 	 	 	ContentNegotiationManager manager) { 
+ 	 	List<ViewResolver> resolvers = new ArrayList<ViewResolver>(); 
+ 	 	resolvers.add(internalResourceViewResolver());  
+ 	 	resolvers.add(new JsonViewResolver()); 
+ 	 	resolvers.add(getMarshallingXmlViewResolver()); 
+ 	 	ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();  	
+ 	 	resolver.setViewResolvers(resolvers); 
+ 	 	resolver.setContentNegotiationManager(manager); 
+ 	 	return resolver; 
+ 	} 
+ 
+ 	@Bean 
+ 	public CustomXMLViewResolver getMarshallingXmlViewResolver() { 
+ 	 	Jaxb2Marshaller marshaller = new Jaxb2Marshaller();  	 	
+ 	 	marshaller.setClassesToBeBound(Producto.class); 
+ 	 	return new CustomXMLViewResolver(marshaller); 
+ 	} 
 
 
+
+ 	
+		
 }

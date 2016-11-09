@@ -8,28 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import py.edu.facitec.springtaller.model.general.General;
 @Entity
-public class Departamento {
+public class Departamento extends General {
 	
-	@Id
-	@GeneratedValue
-	private Integer id;
 	private String descripcion;
 	@OneToMany(mappedBy="departamento")
-	private List<Usuario> listaUsuarios;
+	private List<Usuario> listaUsuario;
 	
-	//indicamos que es una relacion
-	//de uno a uno
+	//indicamos que es una relacion de uno a uno 
 	@OneToOne
 	private Gerente gerente;
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getDescripcion() {
 		return descripcion;
@@ -39,12 +28,12 @@ public class Departamento {
 		this.descripcion = descripcion;
 	}
 
-	public List<Usuario> getListaUsuarios() {
-		return listaUsuarios;
+	public List<Usuario> getListaUsuario() {
+		return listaUsuario;
 	}
 
-	public void setListaUsuarios(List<Usuario> listaUsuarios) {
-		this.listaUsuarios = listaUsuarios;
+	public void setListaUsuario(List<Usuario> listaUsuario) {
+		this.listaUsuario = listaUsuario;
 	}
 
 	public Gerente getGerente() {
@@ -54,14 +43,7 @@ public class Departamento {
 	public void setGerente(Gerente gerente) {
 		this.gerente = gerente;
 	}
+	
+	
 
-	@Override
-	public String toString() {
-		return "Departamento [id=" + id + ", descripcion=" + descripcion + ", listaUsuarios=" + listaUsuarios
-				+ ", gerente=" + gerente + ", toString()=" + super.toString() + "]";
-	}
-	
-	
-	
-	
 }

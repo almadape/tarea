@@ -2,8 +2,6 @@ package py.edu.facitec.springtaller.controller;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,17 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-import py.edu.facitec.springtaller.dao.GerenteDAO;
+import py.edu.facitec.springtaller.dao.GerenteDao;
 import py.edu.facitec.springtaller.model.Gerente;
 
-@RestController
-@Transactional
-@RequestMapping("/gerente")
 public class GerenteController {
 	@Autowired
-	private GerenteDAO  gerenteDao;
+	private GerenteDao  gerenteDao;
 	
 	@RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Gerente> registrar(@RequestBody Gerente gerente){

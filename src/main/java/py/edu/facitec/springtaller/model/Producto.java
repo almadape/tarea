@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import py.edu.facitec.springtaller.model.general.General;
 @Entity
-public class Producto {
-	@Id
-	@GeneratedValue
-	private Integer id;
+public class Producto extends General{
+	
 	@Column(length=100,nullable=false,unique=true)
 	private String descripcion;
 	private Date fechaVencimiento;
@@ -22,13 +22,6 @@ public class Producto {
 	@OneToMany(mappedBy="producto")
 	private List<ItemPedido> itemPedidos;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getDescripcion() {
 		return descripcion;
@@ -70,11 +63,6 @@ public class Producto {
 		this.itemPedidos = itemPedidos;
 	}
 
-	@Override
-	public String toString() {
-		return "Producto [id=" + id + ", descripcion=" + descripcion + ", fechaVencimiento=" + fechaVencimiento
-				+ ", precio=" + precio + ", cantidad=" + cantidad + ", itemPedidos=" + itemPedidos + "]";
-	}
 	
 	
 	

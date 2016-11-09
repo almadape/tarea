@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import py.edu.facitec.springtaller.dao.UsuarioDAO;
+import py.edu.facitec.springtaller.dao.UsuarioDao;
 import py.edu.facitec.springtaller.model.Usuario;
 
 @RestController
@@ -22,7 +23,7 @@ import py.edu.facitec.springtaller.model.Usuario;
 @RequestMapping("/usuario")
 public class UsuarioController {
 	@Autowired
-	private UsuarioDAO usuarioDao;
+	private UsuarioDao usuarioDao;
 	
 	@RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario){
@@ -50,6 +51,11 @@ public class UsuarioController {
 		}
 		usuarioDao.eliminar(usuario);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/form", method=RequestMethod.GET)
+	public ModelAndView formulario(){
+		return new ModelAndView("/usuario/form");
 	}
 
 }

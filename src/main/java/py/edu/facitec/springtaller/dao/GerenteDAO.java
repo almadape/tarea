@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import py.edu.facitec.springtaller.model.Gerente;
 
 @Repository
-public class GerenteDAO extends DAOGenerico<Gerente> {
+public class GerenteDao extends DAOGenerico<Gerente> {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public GerenteDAO() {
+	public GerenteDao() {
 		super(Gerente.class);
 		// TODO Auto-generated constructor stub
 	}

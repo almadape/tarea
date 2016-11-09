@@ -5,31 +5,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import py.edu.facitec.springtaller.model.general.General;
+
 @Entity
-public class ItemPedido {
-	@Id
-	@GeneratedValue
-	private Integer id;
+public class ItemPedido extends General{
 	
 	private int cantidadProducto;
 	private double subTotal;
 	
+	@ManyToOne
+	private Producto producto;
 	
-	
+	@JsonBackReference //Para que sea bi direccional con es otro @jsonmanagedreference
 	@ManyToOne
 	private Pedido pedido;
 
-	@ManyToOne
-	private Producto producto;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public int getCantidadProducto() {
 		return cantidadProducto;
 	}
@@ -46,14 +39,6 @@ public class ItemPedido {
 		this.subTotal = subTotal;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
 	public Producto getProducto() {
 		return producto;
 	}
@@ -62,13 +47,14 @@ public class ItemPedido {
 		this.producto = producto;
 	}
 
-	@Override
-	public String toString() {
-		return "ItemPedido [id=" + id + ", cantidadProducto=" + cantidadProducto + ", subTotal=" + subTotal
-				+ ", pedido=" + pedido + ", producto=" + producto + ", toString()=" + super.toString() + "]";
+	public Pedido getPedido() {
+		return pedido;
 	}
 
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
 
 	
-	
+
 }

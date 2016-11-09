@@ -4,14 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>OK!</title>
 </head>
-<style type="text/css">
-body{background: deepskyblue;display: flex;}
-p{font-size: 50px; margin: 250px auto; color: white; font-family: verdana; transition: all 1s ease;}
-p:hover{transform: scale(1.1); color: yellow; cursor: pointer;}
-</style>
 <body>
-<p>Guardada Exitosamente en la Base de Datos!!</p>
+   <h2>El cliente ha sido guardado con susceso</h2>
 </body>
 </html>

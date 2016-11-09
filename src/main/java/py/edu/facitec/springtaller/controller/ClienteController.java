@@ -10,52 +10,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import py.edu.facitec.springtaller.dao.ClienteDAO;
+import py.edu.facitec.springtaller.dao.ClienteDao;
 import py.edu.facitec.springtaller.model.Cliente;
 
-@Controller
-//Gestionar transaciones
+//gestiona transasiones
 @Transactional
-
+@Controller
+//generacion de JSon
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 public class ClienteController {
-
-	@Autowired
-	private ClienteDAO clienteDAO;
 	
-	@RequestMapping(method=RequestMethod.POST)
-
-					//Viene los datos del formulario
-					//y se pasa al objeto
-	public String save(@RequestBody Cliente cliente){
-
-		System.out.println("Registrando el cliente: "+cliente);
+	//injecta una dependencia
+	@Autowired
+	private ClienteDao clienteDao;
+					//responde a peticiones post
+	@RequestMapping (method=RequestMethod.POST)
+	              //save: vienen los datos del formulario y se pasan a objeto
+	public ModelAndView save (@RequestBody Cliente cliente){
+		clienteDao.guardar(cliente, cliente.getId());
+		System.out.println("Registrando el cliente"+cliente);
 		
-		clienteDAO.guardar(cliente, cliente.getId());
-		
-		System.out.println("Registrado con éxito!!");
-							//Crear la pagina ok.jsp
-		return "/clientes/ok";
+		        //crea la pagina ok.jsp
+		return new ModelAndView("/clientes/ok");
 	}
-	//Crear el metodo
-	@RequestMapping(value="/formulario", method=RequestMethod.GET)
-	public ModelAndView formulario(){
-		ModelAndView model = new ModelAndView("/clientes/formulario");
-		return model;
+	
+	@RequestMapping(value="/formulario", method=RequestMethod.GET) 
+	public String formulario(){
+		System.out.println("");
+		return "/clientes/formulario";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView lista(){
-											//Crear el archivo lista
-											//para visualizar los datos en jsp
+												//crear el archivo lista.jsp para visualizar
 		ModelAndView model = new ModelAndView("/clientes/lista");
-		
-		//Agregamos la lista de clientes al objeto que contendra la vista
-		model.addObject("clientes", clienteDAO.buscarTodos());
-		
+		//agregamos la lista de clientes al objeto que contendra la vista
+		model.addObject("clientes", clienteDao.buscarTodos());
 		return model;
 	}
 
 }
-
